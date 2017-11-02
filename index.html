@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<style type="text/css">
+			body{
+				box-sizing: border-box;
+			}
+			.handBox{
+				width: 260px;
+				height: 150px;
+				background: #f8c6a9;
+				position: relative;
+				margin: 200px;
+			}
+			.handBox:hover{
+				cursor: pointer;
+			}
+			.handBox::before{
+				content: '';
+				display: block;
+				position: absolute;
+				top: 0;
+				left: 0;
+				z-index: 2;
+				width: 144px;
+				border-top: 1px solid #777;
+			}
+			.hand{
+				position: absolute;
+				top: -41px;
+				right: -60px;
+				z-index: -1;
+			}
+			.finger{
+				width: 185px;
+				height: 56px;
+				background: #f8c6a9;
+				border: 1px solid #777;
+				top: -40px;
+				border-radius: 28px 28px 28px 28px;
+				display: flex;
+				justify-content: flex-end;
+				align-items: center;
+			}
+			.finger:after{
+				content: "";
+				width: 50px;
+				height: 48px;
+				display: inline-block;
+				position: absolute;
+				right: 4px;
+				border-radius: 0 23px 23px 0;
+				background: linear-gradient(to right,#f8c6a9 30%,#fff);
+			}
+			.finger:first-child{
+				border-radius: 20px 28px 28px 0;
+			}
+			.finger:last-child{
+				border-radius: 0 28px 28px 20px;
+			}
+			.fingerBig{
+				width: 105px;
+				height: 56px;
+				background: #f8c6a9;
+				border: 1px solid #777;
+				top: -40px;
+				border-radius: 0 28px 28px 0;
+				border-left: none;
+				border-bottom: none;
+				position: absolute;
+				transform: rotateZ(-67deg);
+				transform-origin: 0 7px;
+				left: 146px;
+				border-top-width: 1px;
+				display: flex;
+				justify-content: flex-end;
+				align-items: center;
+			}
+			.fingerBig:after{
+				content: "";
+				width: 50px;
+				height: 48px;
+				display: inline-block;
+				position: absolute;
+				right: 4px;
+				top:4px;
+				border-radius: 0 23px 23px 0;
+				background: linear-gradient(to right,#f8c6a9 30%,#fff);
+			}
+			.fingerBig:before{
+				content: "";
+				width: 50px;
+				height: 48px;
+				display: inline-block;
+				position: absolute;
+				right: 60px;
+				top:4px;
+				border-radius: 0 23px 23px 0;
+				background: linear-gradient(to right,#f8c6a9 50%,#0c0b0b1a);
+			}
+			
+			.zan{
+				font-size: 50px;
+				font-weight: 900;
+				font-family: arial;
+				color: red;
+				position: absolute;
+				top: 40px;
+				left: 330px;
+				opacity: 0;
+			}
+			@keyframes up{
+				0%{
+					transform: translateY(50PX);
+					opacity: 0;
+				}
+				50%{
+					opacity: 1;
+				}
+				100%{
+					opacity: 0;
+					transform: translateY(-50px);
+				}
+			}
+			.zanActive{
+				animation: up .8s linear 1 both;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="handBox" id="handBox">
+			<div class="hand">
+				<div class="finger"></div>
+				<div class="finger"></div>
+				<div class="finger"></div>
+				<div class="finger"></div>
+			</div>
+			<div class="fingerBig"></div>
+			<span id="zan" class="zan">+1</span>
+		</div>
+		
+		<script type="text/javascript">
+			class praiseButton {
+				constructor(){
+					
+				}
+				active(obj){
+					var handBox=document.querySelectorAll("."+obj);
+					var flag=true;
+					for(let i=0;i<handBox.length;i++){
+						handBox[i].zan=handBox[i].querySelectorAll(".zan")[0];
+						handBox[i].onclick=function(i){
+							if(flag){
+								console.log(flag);
+								flag=false;
+								this.zan.classList.add("zanActive");
+								setTimeout(()=>{
+									this.zan.classList.remove("zanActive");
+									flag=true;
+								},1000);
+							}
+						}
+					}
+				}
+				
+			}
+			
+			class Thumb extends praiseButton{
+				constructor(){
+					super();
+				}
+				//取消点赞
+				stop(){}
+			}
+			
+			var zan = new Thumb();
+			zan.active("handBox");
+		</script>
+	</body>
+</html>
